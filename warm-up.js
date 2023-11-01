@@ -233,3 +233,108 @@ function solution (str) {
     }
     return stack.length ? 'no' : 'yes'
 }
+
+//Средний уровень
+
+const readline = require('readline').createInterface(
+  process.stdin,
+  process.stdout,
+);
+
+const input = [];
+
+readline
+  .on('line', (line) => {
+    input.push(line);
+  })
+  .on('close', () => {
+    const res = solution(input);
+    console.log(res);
+    process.exit(0);
+  });
+  
+function solution(input) {
+    const [_, ...rest] = input;
+    const students = rest[0].split(" ").map(Number);
+
+    const prefix = [];
+    prefix.push(students[0]);
+    for (let i = 1; i < students.length; i++) {
+        prefix.push(students[i] + prefix[prefix.length - 1]);
+    }
+    
+    const max = prefix[prefix.length - 1];
+    const ans = [];
+    for (let i = 0; i < students.length; i++) {
+        let len = students.length;
+        let curr = students[i];
+        let a = 0;
+        if (i === 0) {
+            a += max - curr * len;
+            ans.push(a);
+        } else {
+            ans.push(max - curr * (len - i) - (prefix[i - 1] - (curr * i - prefix[i - 1])));
+        }
+    }
+
+    return ans.join(' ');
+}
+
+//Лифт
+
+const readline = require('readline').createInterface(
+  process.stdin,
+  process.stdout,
+);
+
+const input = [];
+
+readline
+  .on('line', (line) => {
+    input.push(line);
+  })
+  .on('close', () => {
+    const res = solution(input);
+    console.log(res);
+    process.exit(0);
+  });
+  
+function solution(input) {
+    let [space, _, ...rest] = input;
+    space = +space;
+    const passengers = rest.map(Number);
+
+    let ans = BigInt(0);
+    let currSpace = space;
+
+    for (let i = passengers.length - 1; i >= 0; i--) {
+            let currPassengers = passengers[i];
+            if (!currPassengers) continue;
+
+            if (currSpace !== space) {
+                currPassengers -= currSpace;
+                if (currPassengers < 0) {
+                    currSpace = Math.abs(currPassengers);
+                    currPassengers = 0;
+                } else {
+                    currSpace = space;
+                }
+            }
+
+            while (currPassengers) {
+                if (space < currPassengers) {
+                    ans += BigInt(Math.floor(currPassengers / space) * (i + 1) * 2);
+                    currPassengers -= Math.floor(currPassengers / space) * space;
+                } else if (space > currPassengers) {
+                    ans += BigInt( (i + 1) * 2);
+                    currSpace = space - currPassengers;
+                    currPassengers = 0;
+                } else {
+                    ans += BigInt( (i + 1) * 2);
+                    currPassengers = 0;
+                }
+            }
+        }
+    
+    return String(BigInt(ans))
+}
