@@ -338,3 +338,39 @@ function solution(input) {
     
     return String(BigInt(ans))
 }
+
+//J. Групповой проект
+
+const readline = require('readline').createInterface(
+    process.stdin,
+    process.stdout,
+);
+
+const input = [];
+
+readline
+    .on('line', (line) => {
+        input.push(line);
+    })
+    .on('close', () => {
+        const res = solution(input);
+        console.log(res);
+        process.exit(0);
+    });
+
+function solution(input) {
+    const [_, ...rest] = input;
+    const data = rest.map((el) => el.split(" ").map(Number));
+    const check = (arr) => {
+        const [n, a, b] = arr;
+        let remainder = n % a;
+        if (!remainder) return 'YES';
+        let gap = b - a;
+        let len = Math.floor(n / a);
+        if (len * gap < remainder) return 'NO'
+        return "YES";
+    };
+
+    let ans = data.map(check);
+    return ans.join("\n");
+}
