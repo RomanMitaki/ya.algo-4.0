@@ -1,5 +1,5 @@
 //Не минимум на отрезке
-
+/*
 const readline = require('readline').createInterface(
   process.stdin,
   process.stdout,
@@ -16,7 +16,7 @@ readline
     console.log(res);
     process.exit(0);
   });
-  
+*/
   function solution(input) {
     let [data, arr, ...rest] = input;
     const nums = arr.split(' ').map(Number);
@@ -38,7 +38,7 @@ readline
 }
 
 //Сложить две дроби
-
+/*
 const readline = require('readline').createInterface(
   process.stdin,
   process.stdout,
@@ -49,7 +49,7 @@ readline.on('line', (line) => {
   console.log(result);
   process.exit(0);
 });
-
+*/
 function solution(input) {
   const data = input.split(" ").map(Number);
   let [a, b, c, d] = data;
@@ -74,7 +74,7 @@ function solution(input) {
 }
 
 //Анаграмма?
-
+/*
 const readline = require('readline').createInterface(
   process.stdin,
   process.stdout,
@@ -91,7 +91,7 @@ readline
     console.log(res);
     process.exit(0);
   });
-  
+  */
 function solution(words) {
   const getHash = (word) => {
     const ans = new Map();
@@ -114,7 +114,7 @@ function solution(words) {
 }
 
 //Кролик учит геометрию
-
+/*
 const readline = require('readline').createInterface(
   process.stdin,
   process.stdout,
@@ -131,7 +131,7 @@ readline
     console.log(res);
     process.exit(0);
   });
-  
+  */
   function solution(input) {
   const [_, ...rest] = input;
   const matrix = rest.map((el) => el.split(" ").map(Number));
@@ -173,7 +173,7 @@ readline
 }
 
 //Результаты контеста
-
+/*
 const readline = require('readline').createInterface(
   process.stdin,
   process.stdout,
@@ -190,7 +190,7 @@ readline
     console.log(res);
     process.exit(0);
   });
-  
+ */
   function solution(input) {
   const data = input.map(Number);
   let [groupA, groupB, tasks] = data;
@@ -201,7 +201,7 @@ readline
 }
 
 //Правильная скобочная последовательность
-
+/*
 const readline = require('readline').createInterface(
   process.stdin,
   process.stdout,
@@ -212,7 +212,7 @@ readline.on('line', (line) => {
   console.log(result);
   process.exit(0);
 });
-
+*/
 function solution (str) {
     const stack = [];
     const map = new Map();
@@ -235,7 +235,7 @@ function solution (str) {
 }
 
 //Средний уровень
-
+/*
 const readline = require('readline').createInterface(
   process.stdin,
   process.stdout,
@@ -252,7 +252,7 @@ readline
     console.log(res);
     process.exit(0);
   });
-  
+ */
 function solution(input) {
     const [_, ...rest] = input;
     const students = rest[0].split(" ").map(Number);
@@ -281,7 +281,7 @@ function solution(input) {
 }
 
 //Лифт
-
+/*
 const readline = require('readline').createInterface(
   process.stdin,
   process.stdout,
@@ -298,7 +298,7 @@ readline
     console.log(res);
     process.exit(0);
   });
-  
+ */
 function solution(input) {
     let [space, _, ...rest] = input;
     space = +space;
@@ -340,7 +340,7 @@ function solution(input) {
 }
 
 //J. Групповой проект
-
+/*
 const readline = require('readline').createInterface(
     process.stdin,
     process.stdout,
@@ -357,7 +357,7 @@ readline
         console.log(res);
         process.exit(0);
     });
-
+*/
 function solution(input) {
     const [_, ...rest] = input;
     const data = rest.map((el) => el.split(" ").map(Number));
@@ -373,4 +373,36 @@ function solution(input) {
 
     let ans = data.map(check);
     return ans.join("\n");
+}
+
+//Путешествие по Москве
+/*
+const readline = require('readline').createInterface(
+    process.stdin,
+    process.stdout,
+);
+
+readline.on('line', (line) => {
+    const result = solution(line);
+    console.log(result);
+    process.exit(0);
+});
+*/
+function solution(n) {
+    let [xA, yA, xB, yB] = n.split(' ').map(Number);
+
+    let rA = Math.hypot(xA, yA);
+    let rB = Math.hypot(xB, yB);
+    if (!xA && !yA) return rB;
+    if (!xB && !yB) return rA;
+
+    let angleA = Math.atan2(yA, xA);
+    let angleB = Math.atan2(yB, xB);
+
+    let angleDiff = angleB - angleA;
+    if (angleDiff < -Math.PI) angleDiff += 2 * Math.PI;
+    if (angleDiff > Math.PI) angleDiff -= 2 * Math.PI;
+    if (!angleDiff) return Math.abs(rA - rB);
+    let arcLen = Math.abs(angleDiff) * Math.min(rA, rB);
+    return Math.min((rA + rB), Math.abs(rA - rB) + arcLen);
 }
